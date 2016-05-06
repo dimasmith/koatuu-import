@@ -2,7 +2,7 @@ class KoatuuCode:
     """Parse string representation of KOATUU code."""
     def __init__(self, code):
         super().__init__()
-        self.code = code
+        self.code = code.rjust(10, '0')
 
     def is_raion_descriptor(self):
         return self.code.endswith('00000') \
@@ -14,10 +14,10 @@ class KoatuuCode:
 
     def get_oblast_code(self):
         oblast_code = self.code[:2]
-        if oblast_code == '52':
-            return '50'  # exception for Vinnytska oblast
-        if oblast_code == '72':
-            return '70'  # exception for Volynska oblast
+        # if oblast_code == '52':
+        #     return '50'  # exception for Vinnytska oblast
+        # if oblast_code == '72':
+        #     return '70'  # exception for Volynska oblast
         return oblast_code
 
     def as_string(self):

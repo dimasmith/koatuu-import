@@ -1,8 +1,9 @@
 from pymongo import MongoClient
 
 
-def write_raions(raions, collection='raions', database='cities', mongo_uri='mongodb://localhost:27017/'):
+def insert_raions(raions, collection_name='raions', database_name='cities', mongo_uri='mongodb://localhost:27017/'):
     client = MongoClient(mongo_uri)
-    db = client[database]
-    collection = db[collection]
+    db = client[database_name]
+    collection = db[collection_name]
+    collection.drop()
     collection.insert_many(raions)
