@@ -1,17 +1,25 @@
 import logging
 
-from koatuu.csv.reader import read_raion_centers
-from koatuu.geocoding.google import geocode_raions
-from koatuu.mongo import writer as mongo
+from os.path import join
+
+from coordinates.csv import reader as coordinates_reader
+from koatuu.csv import reader as koatuu_reader
+from koatuu.mongo.writer import insert_raions
 
 
 def main():
-    raions = read_raion_centers('data/koatuu.csv')
-    geocodes = geocode_raions(raions)
-    for raion, geocode in zip(raions, geocodes):
-        raion['geocode'] = geocode
+    raion_centers = koatuu_reader.read_raion_centers(join('data', 'koatuu.csv'))
+    raion_centers_map = {}
+    for raion_center in raion_centers:
+        raion_centers_map[raion_center['key']] = raion_center
 
-    mongo.insert_raions(raions)
+    coordinates_points = coordinates_reader.read_points(join('data', 'cities-with-coordinates_utf-8.csv'))
+    for cp in coordinates_points:
+        raion = raion_centers_map.pop(cp['key'], None)
+        if raion:
+            raion['coords'] = {'lat': cp['lat'], 'lon': cp['lon']}
+
+    insert_raions(raion_centers, mongo_uri='mongodb://192.168.99.100:27017/')
 
 
 if __name__ == '__main__':

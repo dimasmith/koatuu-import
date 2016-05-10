@@ -13,15 +13,13 @@ class KoatuuCode:
         return self.code.endswith('00000000')
 
     def get_oblast_code(self):
-        oblast_code = self.code[:2]
-        # if oblast_code == '52':
-        #     return '50'  # exception for Vinnytska oblast
-        # if oblast_code == '72':
-        #     return '70'  # exception for Volynska oblast
-        return oblast_code
+        return self.code[:2]
 
     def as_string(self):
         return self.code
+
+    def get_raion_code(self):
+        return self.code[:5]
 
 
 def parse_unit_name(compound_name):
