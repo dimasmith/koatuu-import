@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+from pymongo import MongoClient, GEOSPHERE
 
 
 def insert_raions(raions, collection_name='raions', database_name='cities', mongo_uri='mongodb://localhost:27017/'):
@@ -7,3 +7,4 @@ def insert_raions(raions, collection_name='raions', database_name='cities', mong
     collection = db[collection_name]
     collection.drop()
     collection.insert_many(raions)
+    collection.create_index([('loc', GEOSPHERE)])
