@@ -17,7 +17,7 @@ def main():
     for cp in coordinates_points:
         raion = raion_centers_map.pop(cp['key'], None)
         if raion:
-            raion['coords'] = {'lat': cp['lat'], 'lon': cp['lon']}
+            raion['loc'] = cp['loc']
 
     insert_raions(raion_centers, mongo_uri='mongodb://192.168.99.100:27017/')
 
