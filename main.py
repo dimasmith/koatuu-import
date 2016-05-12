@@ -1,5 +1,7 @@
 import logging
 
+from os import getenv
+
 from os.path import join
 
 from coordinates.csv import reader as coordinates_reader
@@ -19,7 +21,7 @@ def main():
         if raion:
             raion['loc'] = cp['loc']
 
-    insert_raions(raion_centers, mongo_uri='mongodb://192.168.99.100:27017/')
+    insert_raions(raion_centers, mongo_uri=getenv('MONGO_URI'))
 
 
 if __name__ == '__main__':
